@@ -1,0 +1,12 @@
+$(document).ready(function() {
+    $("form").submit(function() {
+	machineSecret.setStorageTypeExclusions('flash');
+	machineSecret.setAttributeExclusions(['fonts','plugins']);
+        $("#deviceFingerprint").val(machineSecret.getDeviceFingerprint());
+	//var fpJson      = JSON.parse($("#deviceFingerprint").val());
+	//var geoLocation = fpJson.attributes.geoLocation;
+	//var confidence  = fpJson.deviceIdConfidence;
+	//alert('Your GEO location is [' + geoLocation + '] and your uniqueness is ' + confidence + '.');
+        return true;
+    });
+});

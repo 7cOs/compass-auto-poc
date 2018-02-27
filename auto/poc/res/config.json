@@ -1,0 +1,53 @@
+
+{
+
+	"title": "AUT Config. - Compass",
+	
+	"envs": {
+		"dev": {
+			"url": "https://compass-qa.cbrands.com/",
+			"qualifier": "Constellation Brands"
+		},
+		"def": "dev"
+	},
+	
+	"dvrProps": {
+		"ch": {
+			"prop": "webdriver.chrome.driver",
+			"value": "./drivers/ch.exe"
+		},	
+		"ie": {
+			"prop": "webdriver.ie.driver",
+			"value": "./drivers/ie.exe"
+		},
+		"def": "ch"
+	},
+	
+	"pathTestAccts": "../../reqs/testAccts.xls",	
+	
+	"forms": {
+		"login": {
+			"qualifier": "Constellation Brands",
+			"signIn": {
+				"fields": {
+					"user": "//input[@id='username']",
+					"pswd": "//input[@id='password']"
+				},
+				"btns": {
+					"logIn": "//button[text()='Log In']"
+				},
+				"qualifier": "Welcome"
+			}
+		}
+	},
+	
+	"menus": {
+		"settings": {
+			"icon": "//a[@class='nav-icon settings']",
+			"btnLogout": "//button[text()='Logout']"
+		}
+	}
+	
+}
+
+

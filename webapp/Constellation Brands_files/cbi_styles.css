@@ -1,0 +1,67 @@
+.container-center-middle
+{
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.row-custom
+{
+    height: 100%;
+    
+    display: -webkit-flexbox;
+    -webkit-flex-align: center;
+
+    display: -ms-flexbox;
+    -ms-flex-align: center;
+
+    display: -moz-box-flex;
+    -moz-flex-align: center;
+
+    display: -webkit-flex;
+    -webkit-align-items: center;
+
+    display: flex;
+    align-items: center;
+}
+
+.logo-image
+{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-error-text
+{
+    color: #AD0E25;
+    padding-bottom: 10px;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.useful-links-container
+{
+    padding-top: 15px;
+}
+
+p.small-line {
+    line-height: 60%;
+}
+
+.top-buffer-2px 
+{ 
+	margin-top:2px; 
+}
+
+.top-buffer-5px
+{ 
+	margin-top:5px; 
+}
+
+.top-buffer-10px
+{ 
+	margin-top:5px; 
+}
