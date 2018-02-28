@@ -12,15 +12,28 @@
 	},
 	
 	"dvrProps": {
+		"def": "ch",
 		"ch": {
 			"prop": "webdriver.chrome.driver",
-			"value": "./drivers/ch.exe"
+			"value": "./drivers/ch.exe",
+			"opts": ["--start-maximized"],
+			"headless": true
 		},	
 		"ie": {
 			"prop": "webdriver.ie.driver",
-			"value": "./drivers/ie.exe"
+			"value": "./drivers/ie.exe",
+			"opts": ["--start-maximized"]
 		},
-		"def": "ch"
+		"procs": ["chromedriver.exe",
+			"ch.exe",
+			"IEDriverServer.exe",
+			"ie.exe" 
+			],
+		"euArgs": { 
+			"a": "cmd.exe", 
+			"s": "/c", 
+			"c": "taskkill /im [RES] /f"
+		}
 	},
 	
 	"pathTestAccts": "../../reqs/testAccts.xls",	
