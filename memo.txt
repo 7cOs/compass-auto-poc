@@ -1,8 +1,13 @@
 
-- create java (maven) project to read test user accounts from testAccts.xlsx
-	- add dependencies: selenium, apache-poi
-- download webdrivers (ie, ch)
-- confirm test user accounts by launching compass web app and logging in as test user acct
-- *solve for IE driver launch error
+- create java (maven) project to read test user accounts from testAccts.xlsx - complete
+	- add dependencies: selenium, apache-poi 
+- download webdrivers (ie, ch) - complete
+- confirm test user accounts by launching compass web app and logging in as test user acct - complete
+- add chromeDriver opts - maximise on launch, silent mode
+- add capture evidence feature post test scenario complete
+- add custom test report 
 
-SKARNESH@CWC.cbi.net
+- design and implement kilsof - e.g., euthanise process - complete
+
+- *solve for IE driver launch error - complete
+- *solve for IE sendkeys slow type error
