@@ -16,6 +16,7 @@ import org.testng.annotations.AfterTest;
 
 public class AUT extends framework.poc.AUT {
 	
+	
   @BeforeTest
   public void beforeTest() {
 	  init( getProcCfg() );
@@ -28,7 +29,7 @@ public class AUT extends framework.poc.AUT {
   }
 
  
-  // @Test
+  @Test
   public void testLaunchDriver() {
 	  launchDriver();
   }

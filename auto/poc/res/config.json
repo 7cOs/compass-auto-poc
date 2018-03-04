@@ -1,8 +1,6 @@
 
 {
-
 	"title": "AUT Config. - Compass",
-	
 	"envs": {
 		"dev": {
 			"url": "https://compass-qa.cbrands.com/",
@@ -10,34 +8,36 @@
 		},
 		"def": "dev"
 	},
-	
 	"dvrProps": {
 		"def": "ch",
 		"ch": {
 			"prop": "webdriver.chrome.driver",
 			"value": "./drivers/ch.exe",
-			"opts": ["--start-maximized"],
-			"headless": true
-		},	
+			"opts": [
+				"--start-maximized"
+			],
+			"silent": false
+		},
 		"ie": {
 			"prop": "webdriver.ie.driver",
 			"value": "./drivers/ie.exe",
-			"opts": ["--start-maximized"]
+			"opts": [
+				"--start-maximized"
+			]
 		},
-		"procs": ["chromedriver.exe",
+		"procs": [
+			"chromedriver.exe",
 			"ch.exe",
 			"IEDriverServer.exe",
-			"ie.exe" 
-			],
-		"euArgs": { 
-			"a": "cmd.exe", 
-			"s": "/c", 
+			"ie.exe"
+		],
+		"euArgs": {
+			"a": "cmd.exe",
+			"s": "/c",
 			"c": "taskkill /im [RES] /f"
 		}
 	},
-	
-	"pathTestAccts": "../../reqs/testAccts.xls",	
-	
+	"pathTestAccts": "../../reqs/testAccts.xls",
 	"forms": {
 		"login": {
 			"qualifier": "Constellation Brands",
@@ -53,14 +53,12 @@
 			}
 		}
 	},
-	
 	"menus": {
 		"settings": {
 			"icon": "//a[@class='nav-icon settings']",
 			"btnLogout": "//button[text()='Logout']"
 		}
 	}
-	
 }
 
 

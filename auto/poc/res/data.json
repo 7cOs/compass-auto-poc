@@ -1,6 +1,8 @@
 {
-	"testUsers": [{
-		"user": "chris.williams@cbrands.com",
-		"pswd": "Corona.2016"
-	}]
+	"testUsers": [
+		{
+			"user": "chris.williams@cbrands.com",
+			"pswd": "Corona.2016"
+		}
+	]
 }

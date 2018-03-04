@@ -36,6 +36,7 @@ public class Utils {
 	public static String defEnv = null;
 	public static String defEnvUrl = null;
 	public static JsonArray defDvrOpts = null;
+	public static boolean isSilent = false;
 	public static String pTusers = null;
 	public static JsonObject frms = null;
 	public static JsonObject data = null;
@@ -81,6 +82,9 @@ public class Utils {
 				defDvr = dvrProps.get("def").getAsString();
 				defDvrOpts = dvrProps.get( defDvr ).getAsJsonObject()
 						.get("opts").getAsJsonArray();
+				// - Detect execution mode - //
+				isSilent = dvrProps.get( defDvr ) .getAsJsonObject().has("silent") ?
+						dvrProps.get( defDvr ) .getAsJsonObject().get("silent").getAsBoolean() : false;
 				
 				// - Get/Set default test environment name & URL - //
 				envs = cfg.get("envs").getAsJsonObject();
@@ -143,15 +147,17 @@ public class Utils {
 	 * @author sdk
 	 */
 	public static WebDriver launchDriver( String n ) {
-		
-		ChromeOptions opts = new ChromeOptions();
-		opts.addArguments("--start-maximized");
-		opts.addArguments("headless");
-		
+
 		switch( n ) {
 		
 		case "ch":
+			ChromeOptions opts = new ChromeOptions();
+			defDvrOpts.forEach( e -> {
+				opts.addArguments(  e.getAsString() );
+			});
+			if( isSilent ) { opts.setHeadless( isSilent ); }
 			dvr = new ChromeDriver( opts );
+			dvr.switchTo().window("E5A60DF93532C421D23F83064BC53EA9");
 			break;
 		case "ie":
 			dvr = new InternetExplorerDriver();
@@ -380,6 +386,7 @@ public class Utils {
 	public static void kilsof() {
 		// - Iterate driver properties for driver processes; 
 		// - Terminate System resources consumed by driver (if applicable) - //
+		System.out.println( "kilsof process start..." );
 		try {
 			// - Get processes array - //
 			JsonArray ps = dvrProps.get( "procs" ).getAsJsonArray();
@@ -388,6 +395,7 @@ public class Utils {
 			Iterator<JsonElement> it = ps.iterator();
 			while( it.hasNext() ) {
 				String pId = it.next().getAsString();
+				System.out.println( "Euthanising the following '" + pId + "'..." );
 				String[] cmd = { // - Parse eu args - //
 						co.get("a").getAsString(), co.get("s").getAsString(), 
 						co.get("c").getAsString().replace( "[RES]", pId )
@@ -398,6 +406,9 @@ public class Utils {
 
 		} catch( Exception x ) {
 			x.printStackTrace();
+		}
+		finally {
+			System.out.println( "kilsof process end" );
 		}
 	}
 }
