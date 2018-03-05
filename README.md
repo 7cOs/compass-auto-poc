@@ -21,17 +21,17 @@ to do other things on the same system the test is being executed on.
 <ul>
   <li><b>Basic</b>
     <ul>
-      <li>TestLaunchBrowser</li>
-      <li>TestLaunchAUT</li>
-      <li>TestLogInUser</li>
-      <li>TestLogOutUser</li>
-      <li>TestExitBrowser</li>
+      <li>testLaunchBrowser</li>
+      <li>testLaunchAUT</li>
+      <li>testUserLogin</li>
+      <li>testUserLogOut</li>
+      <li>testExitBrowser</li>
     </ul>
   </li>
   <li><b>General</b>
     <ul>
-      <li>TestLogInOutUser</li>
-      <li>TestLogInOutUsers</li>
+      <li>testLogInOutUser</li>
+      <li>testLogInOutUsers</li>
     </ul>
   </li>
 </ul>
