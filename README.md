@@ -24,7 +24,7 @@ to do other things on the same system the test is being executed on.
       <li>testLaunchBrowser</li>
       <li>testLaunchAUT</li>
       <li>testUserLogin</li>
-      <li>testUserLogOut</li>
+      <li>testUserLogout</li>
       <li>testExitBrowser</li>
     </ul>
   </li>
