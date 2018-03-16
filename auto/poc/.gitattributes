@@ -1,2 +1,2 @@
 # Override treat Binary file(s) as text
-images/*.png binary
+images/*.png -text -diff
