@@ -30,19 +30,26 @@ public class TestAUT extends framework.poc.AUT {
     kilsof();
   }
  
-  @Test
+  // @Test
   public void testLaunchDriver() {
 	  launchDriver();
   }
   
- @Test
+  @Test()
+  public void testLogin() {
+    launchAUT();
+    login(tusers.get(0) .getAsJsonObject()
+        .get("user").getAsString());
+  }
+  
+ //@Test
   public void testLogInOutUser() {
 	  // - Fetch random test user account - //
 	  Assert.assertEquals(true, logInOut( tusers.get(0)
 			  .getAsJsonObject().get("user").getAsString() ) );
   }
 
-  @Test
+  // @Test
   public void testLogInOutUsers() throws Exception {
 		
     	// - Load test user accounts xlsx - //
