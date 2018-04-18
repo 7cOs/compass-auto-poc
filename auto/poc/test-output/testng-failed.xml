@@ -5,8 +5,8 @@
     <classes>
       <class name="framework.poc.test.TestAUT">
         <methods>
+          <include name="testLogInOutUser"/>
           <include name="afterTest"/>
-          <include name="testLogInOutUsers"/>
           <include name="beforeTest"/>
         </methods>
       </class> <!-- framework.poc.test.TestAUT -->

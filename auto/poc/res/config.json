@@ -14,7 +14,8 @@
 			"prop": "webdriver.chrome.driver",
 			"value": "./drivers/ch.exe",
 			"opts": [
-				"--start-maximized"
+				"--start-maximized",
+				"--disable-infobars"
 			],
 			"silent": false
 		},

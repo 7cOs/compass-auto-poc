@@ -426,15 +426,9 @@ public class Utils {
 	
 	/**
 	 * d2c or testMethodsExtractor
-	 * @throws IOException 
-	 * @throws MalformedURLException 
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws IOException
 	 */
 	public static ArrayList<String> d2c(String p) throws IOException {
-	  // - Read test case methods from test class file - //
-	  System.out.println("Test Cases:");
 	  ArrayList<String> tcs = new ArrayList<String>();
 	  String cls = new String(Files.readAllBytes(Paths.get(p)));
 	  String[] ms = cls.split("@Test");
@@ -445,16 +439,15 @@ public class Utils {
 	    String l3 = l2.substring(l2.indexOf(" "));
 	    tcs.add( l3 );
 	  }
-	  System.out.println( tcs );
       return tcs;
 	}
-	
+
 	public static void main(String[] args ) throws IOException {
-	   String p = "C:/projects_sdk/cb/compass-portal/automation-test/"
+	  String p = "C:/projects_sdk/cb/compass-portal/automation-test/"
 	          + "src/test/java/com/cbrands/test/functional/opportunities/"
 	          + "OpportunitiesSavedReportsTest.java";
-	   // - Test PoC - //
-	   p = "./src/test/java/framework/poc/test/TestAUT.java ";
+	  // - Test PoC - //
+	  p = "./src/test/java/framework/poc/test/TestAUT.java";
 	  d2c(p);
 	}
 }

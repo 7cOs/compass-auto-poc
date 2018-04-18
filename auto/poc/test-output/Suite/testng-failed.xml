@@ -5,8 +5,13 @@
     <classes>
       <class name="framework.poc.test.TestAUT">
         <methods>
+<<<<<<< HEAD
           <include name="afterTest"/>
           <include name="testLogInOutUsers"/>
+=======
+          <include name="testLogInOutUser"/>
+          <include name="afterTest"/>
+>>>>>>> branch 'master' of https://github.com/7cOs/compass-auto-poc.git
           <include name="beforeTest"/>
         </methods>
       </class> <!-- framework.poc.test.TestAUT -->
