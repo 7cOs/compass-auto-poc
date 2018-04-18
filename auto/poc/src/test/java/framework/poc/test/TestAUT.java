@@ -71,7 +71,5 @@ public class TestAUT extends framework.poc.AUT {
     		// if( dvr != null ) { dvr.quit(); }
     		kilsof();
     	}
-    	
-	}
-  
+	} 
 }
