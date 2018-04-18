@@ -1,9 +1,16 @@
 package framework.poc;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
@@ -12,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.xmlbeans.impl.store.Path;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -157,7 +165,6 @@ public class Utils {
 			});
 			if( isSilent ) { opts.setHeadless( isSilent ); }
 			dvr = new ChromeDriver( opts );
-			dvr.switchTo().window("E5A60DF93532C421D23F83064BC53EA9");
 			break;
 		case "ie":
 			dvr = new InternetExplorerDriver();
@@ -388,6 +395,10 @@ public class Utils {
 		// - Terminate System resources consumed by driver (if applicable) - //
 		System.out.println( "kilsof process start..." );
 		try {
+
+		    // - Displace driver if applicable - //
+		    if( dvr !=null ) { dvr.quit(); } 
+		    
 			// - Get processes array - //
 			JsonArray ps = dvrProps.get( "procs" ).getAsJsonArray();
 			// - Get euthanise command args - //
@@ -408,7 +419,42 @@ public class Utils {
 			x.printStackTrace();
 		}
 		finally {
+		    try{ Thread.sleep( 1515 ); } catch(Exception x) {}
 			System.out.println( "kilsof process end" );
 		}
+	}
+	
+	/**
+	 * d2c or testMethodsExtractor
+	 * @throws IOException 
+	 * @throws MalformedURLException 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 */
+	public static ArrayList<String> d2c(String p) throws IOException {
+	  // - Read test case methods from test class file - //
+	  System.out.println("Test Cases:");
+	  ArrayList<String> tcs = new ArrayList<String>();
+	  String cls = new String(Files.readAllBytes(Paths.get(p)));
+	  String[] ms = cls.split("@Test");
+	  for(int i=1; i<ms.length; i++) {
+	    String tc = ms[i];
+	    String l1 = tc.substring( tc.indexOf("void" ) );
+	    String l2 = l1.substring( 0, l1.indexOf("(") );
+	    String l3 = l2.substring(l2.indexOf(" "));
+	    tcs.add( l3 );
+	  }
+	  System.out.println( tcs );
+      return tcs;
+	}
+	
+	public static void main(String[] args ) throws IOException {
+	   String p = "C:/projects_sdk/cb/compass-portal/automation-test/"
+	          + "src/test/java/com/cbrands/test/functional/opportunities/"
+	          + "OpportunitiesSavedReportsTest.java";
+	   // - Test PoC - //
+	   p = "./src/test/java/framework/poc/test/TestAUT.java ";
+	  d2c(p);
 	}
 }

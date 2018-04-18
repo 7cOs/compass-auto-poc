@@ -12,39 +12,37 @@ import org.testng.annotations.BeforeTest;
 
 import java.util.Iterator;
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
-public class AUT extends framework.poc.AUT {
-	
-	
-  @BeforeTest
+public class TestAUT extends framework.poc.AUT {
+
+  @BeforeClass
   public void beforeTest() {
 	  init( getProcCfg() );
   }
 
-  
-  @AfterTest
-  public void afterTest() {	  
-	  kilsof();
+  @AfterMethod
+  public void afterTest() {	
+    kilsof();
   }
-
  
   @Test
   public void testLaunchDriver() {
 	  launchDriver();
   }
   
-  
-  // @Test
+ @Test
   public void testLogInOutUser() {
-	  
 	  // - Fetch random test user account - //
 	  Assert.assertEquals(true, logInOut( tusers.get(0)
 			  .getAsJsonObject().get("user").getAsString() ) );
   }
-  
-  
-  // @Test
+
+  @Test
   public void testLogInOutUsers() throws Exception {
 		
     	// - Load test user accounts xlsx - //
@@ -70,7 +68,8 @@ public class AUT extends framework.poc.AUT {
     	while( it.hasNext() ) {
     		JsonObject o = it.next().getAsJsonObject();
     		logInOut( o.get( "user" ).getAsString() );
-    		if( dvr != null ) { dvr.quit(); }
+    		// if( dvr != null ) { dvr.quit(); }
+    		kilsof();
     	}
     	
 	}
