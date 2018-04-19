@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -33,6 +36,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.oracle.tools.packager.Log;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 
 
 public class Utils {
@@ -442,12 +449,81 @@ public class Utils {
       return tcs;
 	}
 
+	public static class WebServer {
+		
+		public static void start() throws IOException {
+	        HttpServer server = HttpServer.create(new InetSocketAddress(7199), 0);
+	        server.createContext("/", new MyHandler());
+	        server.createContext("/executeTests", new ExecTestHandler());
+	        server.setExecutor(null); // creates a default executor
+	        server.start();	
+		}
+		
+	    public static class ExecTestHandler implements HttpHandler {
+	        @Override
+	        public void handle(HttpExchange t) throws IOException {
+	            String response = 
+	            		"<div style='font-family:arial;"
+	            		+ "text-align:center;font-weight:bold;'>"
+	            				+ "Test(s) execution start..."
+	            		+ "</div>";
+	            t.sendResponseHeaders(200, response.length());
+	            try(OutputStream os = t.getResponseBody()) {
+		            os.write(response.getBytes());
+					String[] cmd = {"cmd.exe", "/c", "mvn test -P testng"};
+					ProcessBuilder p = new ProcessBuilder(cmd);
+					try {
+						//p.start().waitFor();
+						response = 
+								"<div style='font-family:arial;'></div>";
+						os.write(response.getBytes());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+	            }
+	        }
+	    }	
+	    
+	    public static class MyHandler implements HttpHandler {
+	        @Override
+	        public void handle(HttpExchange t) throws IOException {
+	            String response = 
+	            		"<div style='text-align:center;'>"
+		            		+ "<a href='/executeTests' style='font-family:tahoma;'>"
+		            				+ "Execute Tests..."
+		            		+ "</a>"
+	            		+ "</div>";
+	            t.sendResponseHeaders(200, response.length());
+	            OutputStream os = t.getResponseBody();
+	            os.write(response.getBytes());
+	            os.close();
+	        }
+	    }
+	    
+	    public static class LoadAppHandler implements HttpHandler {
+	        @Override
+	        public void handle(HttpExchange t) throws IOException {
+	            String response = 
+	            		"<div style='text-align:center;'>"
+		            		+ "<a href='/executeTests' style='font-family:tahoma;'>"
+		            				+ "Execute Tests..."
+		            		+ "</a>"
+	            		+ "</div>";
+	            t.sendResponseHeaders(200, response.length());
+	            OutputStream os = t.getResponseBody();
+	            os.write(response.getBytes());
+	            os.close();
+	        }
+	    }	    
+	}
+
 	public static void main(String[] args ) throws IOException {
 	  String p = "C:/projects_sdk/cb/compass-portal/automation-test/"
 	          + "src/test/java/com/cbrands/test/functional/opportunities/"
 	          + "OpportunitiesSavedReportsTest.java";
 	  // - Test PoC - //
 	  p = "./src/test/java/framework/poc/test/TestAUT.java";
-	  d2c(p);
+	  // System.out.println( d2c(p) );
+	  WebServer.start();
 	}
 }
