@@ -17,7 +17,7 @@
 				"--start-maximized",
 				"--disable-infobars"
 			],
-			"silent": false
+			"silent": true
 		},
 		"ie": {
 			"prop": "webdriver.ie.driver",

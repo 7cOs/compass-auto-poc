@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -31,6 +32,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.TestListenerAdapter;
+import org.testng.TestNG;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -453,68 +456,54 @@ public class Utils {
 		
 		public static void start() throws IOException {
 	        HttpServer server = HttpServer.create(new InetSocketAddress(7199), 0);
-	        server.createContext("/", new MyHandler());
-	        server.createContext("/executeTests", new ExecTestHandler());
-	        server.setExecutor(null); // creates a default executor
+	        server.createContext("/", new AppLoader());
+	        server.createContext("/extractTestMethods", new TestMethodsExtractor());
+	        server.createContext("/executeTests", new ExecuteTest());
+	        server.setExecutor(null);
 	        server.start();	
 		}
-		
-	    public static class ExecTestHandler implements HttpHandler {
+
+	    public static class AppLoader implements HttpHandler {
 	        @Override
 	        public void handle(HttpExchange t) throws IOException {
-	            String response = 
-	            		"<div style='font-family:arial;"
-	            		+ "text-align:center;font-weight:bold;'>"
-	            				+ "Test(s) execution start..."
-	            		+ "</div>";
-	            t.sendResponseHeaders(200, response.length());
-	            try(OutputStream os = t.getResponseBody()) {
-		            os.write(response.getBytes());
-					String[] cmd = {"cmd.exe", "/c", "mvn test -P testng"};
-					ProcessBuilder p = new ProcessBuilder(cmd);
-					try {
-						//p.start().waitFor();
-						response = 
-								"<div style='font-family:arial;'></div>";
-						os.write(response.getBytes());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-	            }
-	        }
-	    }	
-	    
-	    public static class MyHandler implements HttpHandler {
-	        @Override
-	        public void handle(HttpExchange t) throws IOException {
-	            String response = 
-	            		"<div style='text-align:center;'>"
-		            		+ "<a href='/executeTests' style='font-family:tahoma;'>"
-		            				+ "Execute Tests..."
-		            		+ "</a>"
-	            		+ "</div>";
-	            t.sendResponseHeaders(200, response.length());
-	            OutputStream os = t.getResponseBody();
-	            os.write(response.getBytes());
-	            os.close();
+              String p = "./testquick.htm";
+              String response = new String(Files.readAllBytes(Paths.get(p)));;
+              t.sendResponseHeaders(200, response.length());
+              try(OutputStream os = t.getResponseBody()){
+                os.write(response.getBytes());
+              }
 	        }
 	    }
+
+        public static class TestMethodsExtractor implements HttpHandler {
+          @Override
+          public void handle(HttpExchange t) throws IOException {
+            String p = "./src/test/java/framework/poc/test/TestAUT.java";
+            String methods = d2c(p).toString();
+            t.sendResponseHeaders(200, methods.length());
+            try(OutputStream os = t.getResponseBody()) {
+              os.write(methods.getBytes());
+            }
+          }
+        }
 	    
-	    public static class LoadAppHandler implements HttpHandler {
-	        @Override
-	        public void handle(HttpExchange t) throws IOException {
-	            String response = 
-	            		"<div style='text-align:center;'>"
-		            		+ "<a href='/executeTests' style='font-family:tahoma;'>"
-		            				+ "Execute Tests..."
-		            		+ "</a>"
-	            		+ "</div>";
-	            t.sendResponseHeaders(200, response.length());
-	            OutputStream os = t.getResponseBody();
-	            os.write(response.getBytes());
-	            os.close();
-	        }
-	    }	    
+        public static class ExecuteTest implements HttpHandler {
+            @Override
+            public void handle(HttpExchange t) throws IOException {
+              try {
+                String[] cmd = {"cmd.exe", "/c", "mvn test -P testng"};
+                ProcessBuilder p = new ProcessBuilder(cmd);
+                p.start().waitFor();
+                String response = "Test execution complete!";
+                t.sendResponseHeaders(200, response.length());
+                try(OutputStream os = t.getResponseBody()) {
+                  os.write(response.getBytes());
+                }
+              }catch(Exception x ) {
+                x.printStackTrace();
+              }
+            }
+        }      	    
 	}
 
 	public static void main(String[] args ) throws IOException {
@@ -523,7 +512,7 @@ public class Utils {
 	          + "OpportunitiesSavedReportsTest.java";
 	  // - Test PoC - //
 	  p = "./src/test/java/framework/poc/test/TestAUT.java";
-	  // System.out.println( d2c(p) );
+	  System.out.println( d2c(p).toString() );
 	  WebServer.start();
 	}
 }

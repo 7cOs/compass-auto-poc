@@ -6,7 +6,6 @@
       <class name="framework.poc.test.TestAUT">
         <methods>
           <include name="afterTest"/>
-          <include name="testLaunchDriver"/>
           <include name="testLogin"/>
           <include name="beforeTest"/>
         </methods>

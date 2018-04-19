@@ -1,0 +1,117 @@
+
+<script type="text/javascript">
+
+	var data = {
+		app: {
+			id: 'ci',
+			title: 'Test Case Executor (CI-POC)',
+			header: {
+				id: 'ciHeader',
+				text: 'Test Case Executor (CI-POC)'
+			},
+			actions: {
+				id:'cnCiActionsMain',
+				items: [{
+					id: 'lnkExtractTestMethods',
+					cls: 'action',
+					text: 'Extract Test Methods...',
+				}, {
+					id: 'lnkExecTest',
+					cls: 'action',
+					text: 'Execute Test(s)...',
+				}]
+			},
+			main: {
+				id: 'main',
+				items: [{
+					id: 'cnProgress'
+				}]
+			},
+			footer: {
+				copy: '@copy; 7102 - 7105',
+				email: 'soko.karneh@gmail.com',
+				phone: '818-237-8665'
+			}
+		}
+	};
+	
+	function setStyle( o ) {
+		if( o.style ) {
+			var id=o.id, cls=o.className;
+			with( o.style ) {
+				fontFamily = 'arial';
+				fontSize = '11px';
+				if( id=='ci' ) {
+					[].forEach.call( qs('body *'), function(o) {
+						setStyle( o );
+					});
+				} 
+				else if(id=='lnkExecTest') {
+					fontSize = '17px';
+				} 
+				else if(id=='cnProgress') {
+					fontSize = '17px';
+					paddingTop = '7px';
+				}
+				else if(id=='cnProgress') {
+					fontSize = '17px';
+					paddingTop = '7px';
+				}				
+			}
+		}
+	}
+
+	function setEvents( o ) {
+		o.addEventListener("click", function(e) {
+		    switch( this.id ) {
+		    case 'lnkExecTest':
+				q('#cnProgress').textContent='executing test(s)...';
+				xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+				    if (this.readyState == 4 && this.status == 200) {
+				    	q('#cnProgress').textContent = xhttp.responseText;
+				    }
+				};
+				xhttp.open("GET", "/executeTests", true);
+				xhttp.send();		    	
+		    	break;
+		    }
+		});
+	}
+
+	var d=document, q=null, qs=null, b=null, 
+	a=null; hd=null, cn=null, xhttp=null;
+	
+	q=function( q ) { return d.querySelector( q ); };
+	qs=function( q ) { return d.querySelectorAll( q ); };
+	
+	d.title=data.app.title;
+	
+	window.onload = function() {
+		
+		b=d.body;
+		b.id=data.app.id;
+
+		// - Let ci be client-interface - //
+		
+		// - Add ci header - //
+		hd=b.appendChild(d.createElement('h1'));
+		hd.id=data.app.header.id;
+		hd.textContent=data.app.header.text;
+		
+		// - Add ci actions - //
+		cn=b.appendChild(d.createElement('div'));
+		for(var i in o=data.app.actions) {
+			i=='id' ? cn.id=o[i] :
+			i=='items' ? o[i].forEach(function(o){
+				a=cn.appendChild(d.createElement('a'));
+				a.id=o.id; a.className=o.cls;
+				a.textContent=o.text;
+				setEvents(a);
+			}) : null		
+		}
+		
+		// - Style ci - //
+		setStyle(q('#ci'));
+	}	
+</script>
