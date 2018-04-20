@@ -1,0 +1,68 @@
+<script type="text/javascript" src="data.js"></script>
+<script type="text/javascript" src="style.js"></script>
+<script type="text/javascript" src="events.js"></script>
+
+<script type="text/javascript">
+
+	var d=document, q=null, qs=null, b=null, 
+	a=null; hd=null, cn=null, tbl=null, xhttp=null;
+	
+	q=function( q ) { return d.querySelector( q ); };
+	qs=function( q ) { return d.querySelectorAll( q ); };
+	
+	d.title=data.ci.title;
+	
+	window.onload = function() {
+		
+		b=d.body;
+		b.id=data.ci.id;
+
+		// - Let ci be client-interface - //
+		cn=b.appendChild(d.createElement('div'));
+		cn.id=data.ci.cnId;
+		
+		// - Add ci header - //
+		hd=cn.appendChild(d.createElement('div'));
+		for( var i in o=data.ci.header) {
+			i=='id' ? hd.id=o[i] : null;
+			if( i=='contents' ) { 
+				cn=hd.appendChild(d.createElement('div'));
+				cn.id = o[i].id;
+				for(var i in c=o[i]) {
+					if( i!='id' ) { 
+						var _cn = cn.appendChild(d.createElement('div'));
+						_cn.id=i; _cn.textContent=c[i];
+					}
+				}
+			} 
+		}
+
+		// - Add ci actions - //
+		cn=q('#cnCi').appendChild(d.createElement('div'));
+		tbl = cn.appendChild(d.createElement('div'));
+		tbl.id = data.ci.actions.cntId;
+		for(var i in o=data.ci.actions) {
+			i=='id' ? cn.id=o[i] :
+			i=='items' ? o[i].forEach(function(o){
+				a=tbl.appendChild(d.createElement('a'));
+				a.id=o.id; a.className=o.cls;
+				a.textContent=o.text;
+				setEvents(a);
+			}) : null		
+		}
+		// - Execute default action(s) - - //
+		q('#lnkExtractTestCases').click();
+		
+		// - Add ci main - //
+		var mn=data.ci.main, c=mn.contents, os=c.items;
+		cn=q('#cnCi').appendChild(d.createElement('div'));
+		cn.id = mn.id;
+		os.forEach( function( o ) {
+			var _cn = cn.appendChild(d.createElement('div'));
+			_cn.id = o.id;
+		});
+		
+		// - Style ci - //
+		setCiStyle();
+	};
+</script>

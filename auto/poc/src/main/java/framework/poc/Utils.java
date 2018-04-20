@@ -457,6 +457,10 @@ public class Utils {
 		public static void start() throws IOException {
 	        HttpServer server = HttpServer.create(new InetSocketAddress(7199), 0);
 	        server.createContext("/", new AppLoader());
+	        server.createContext("/data.js", new AppLoader());
+	        server.createContext("/style.js", new AppLoader());
+	        server.createContext("/events.js", new AppLoader());
+	        server.createContext("/favicon.ico", new AppLoader());
 	        server.createContext("/extractTestMethods", new TestMethodsExtractor());
 	        server.createContext("/executeTests", new ExecuteTest());
 	        server.setExecutor(null);
@@ -466,12 +470,24 @@ public class Utils {
 	    public static class AppLoader implements HttpHandler {
 	        @Override
 	        public void handle(HttpExchange t) throws IOException {
-              String p = "./testquick.htm";
-              String response = new String(Files.readAllBytes(Paths.get(p)));;
-              t.sendResponseHeaders(200, response.length());
-              try(OutputStream os = t.getResponseBody()){
-                os.write(response.getBytes());
+	          String bp = getProcCfg().get("cIp").getAsString();
+	          String rp = t.getRequestURI().getPath(), p=null, r=null;
+
+              if(rp.equals("/")) {
+                p = (bp + rp) + getProcCfg().get("ciA").getAsString();
+              } else {
+                if(rp.equals("/data.js")||rp.equals("/style.js")||rp.equals("/events.js")) {
+                  p = (bp + rp.substring(rp.indexOf("/")));
+                }
               }
+	          
+              if(p!=null) {
+                r = new String(Files.readAllBytes(Paths.get(p)));
+                t.sendResponseHeaders(200, r.length());
+                try(OutputStream os = t.getResponseBody()){
+                  os.write(r.getBytes());
+                }
+              }  
 	        }
 	    }
 
@@ -512,7 +528,7 @@ public class Utils {
 	          + "OpportunitiesSavedReportsTest.java";
 	  // - Test PoC - //
 	  p = "./src/test/java/framework/poc/test/TestAUT.java";
-	  System.out.println( d2c(p).toString() );
+	  // System.out.println( d2c(p).toString() );
 	  WebServer.start();
 	}
 }
