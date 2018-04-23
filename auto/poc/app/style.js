@@ -20,23 +20,32 @@ function setStyle( o ) {
 			} else if ( id=='cnCiHeader' ) {
 				fontSize = '27px';
 				background = 'rgb(145,145,145)';
-				margin = '0 auto';
-				width = dW;
-				paddingTop = '145px';
+				// margin = '0 auto';
+				// width = dW;
+				// paddingTop = '145px';
+				// opacity = '0.3';
 			} else if ( id=='ciHeaderContents' ) {
 				fontSize = '21px';
 				fontWeight = 'bold';
-				padding = '15px';
+				// padding = '15px';
+				width = dW;
+				margin = '0 auto';
+				background = 'rgb(125, 125, 125)';
+				paddingTop = '145px';
 			} else if ( id=='procId' ) {
 				color = 'rgb(255,255,255)';
 				// color = 'rgb(154,205,50)';
+				paddingLeft = '15px';
 			} else if ( id=='procName' ) {
 				color = 'rgb(154,205,50)';
 				// color = 'rgb(255,255,255)';
+				paddingLeft = '15px';
 			} else if ( id=='procDef' ) {
 				fontSize = '9.5px';
 				color = 'rgb(215,215,215)';
 				// fontWeight = 'normal';
+				paddingLeft = '15px';
+				paddingBottom = paddingLeft;
 			} else if ( id=='cnCiActionsMain' ) {
 				background = 'rgb(155,155,155)';
 				fontSize = '13.5px';
@@ -54,7 +63,7 @@ function setStyle( o ) {
 				cursor = 'pointer';
 				borderRight = 'solid 1px rgb(205, 205, 205)';
 				// - Fetch action display property - //
-				data.getItem( 'actions', id );
+				// data.getItem( 'actions', id );
 			} else if ( id=='cnCiMain' ) {
 				background = 'rgb(155,155,155)';
 				fontSize = '13.5px';

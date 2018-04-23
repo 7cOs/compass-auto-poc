@@ -1,5 +1,5 @@
 
-var data = {	
+var data = {
 	ci: {
 		id: 'ci',
 		cnId: 'cnCi',
@@ -36,8 +36,7 @@ var data = {
 			color: {
 				def: 'rgb(154,205,50)',
 				hgh: 'rgb(255,255,255)'
-			},
-			getItm: dataOps.getItm
+			}
 		},
 		main: {
 			id: 'cnCiMain',
@@ -55,18 +54,14 @@ var data = {
 				email: 'soko.karneh@gmail.com',
 				phone: '818-237-8665' 
 			},
-			quote: 'in the future, man will pay to think...',
-			copy: '@copy; 7102-7105 | rege-IT solutions, LLC'
+			quote: 'in the future, man must pay to think...',
+			copy: '@copy; 7102-7105 | rege-IT solutions, professional LLC'
 		}
+	},
+	init: function() {
+		Array.prototype.get = function(){ return this; }
 	}
 };
 
-// - Data Operations - //
-var dataOps: {
-	getCmp: function( c ) {
-		return data.ci[c];
-	},
-	getItm: function( n ) {
-		
-	}
-}
+// - Intialise data - //
+data.init();
