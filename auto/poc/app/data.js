@@ -7,7 +7,7 @@ var data = {
 		header: {
 			id: 'cnCiHeader',
 			contents: {
-				id: 'ciHeaderContents',
+				id: 'cnCiHeaderContents',
 				procId: 'QE Automation',
 				procName: 'Test Case Executor (CI-POC)',
 				procDef: '[ci-poc=client-interface:proof-of-concept]'
@@ -26,12 +26,13 @@ var data = {
 				id: 'lnkSelectTestCase',
 				cls: 'action',
 				ico: null,
-				text: 'Select Test Case...'
+				text: 'Select Test Case...',
+				display: false
 			}, , {
 				id: 'lnkTestCaseConfig',
 				cls: 'action',
 				ico: null,
-				text: 'Configure Test Case'
+				text: 'Configure...'
 			}, {
 				id: 'lnkExecTest',
 				cls: 'action',
@@ -58,9 +59,9 @@ var data = {
 							id: 'navheader',
 							htm: 'Projects',
 							items: [{
-								name: 'Compass-Portal (Poc)',
+								name: 'Compass-Portal (PoC)',
 							}, {
-								name: 'Compass-Portal'
+								name: 'Compass-Portal (QA)'
 							}]
 						}, {
 							id: 'navcontents'
@@ -72,12 +73,17 @@ var data = {
 			}
 		},
 		footer: {
-			suport: {
-				email: 'soko.karneh@gmail.com',
-				phone: '818-237-8665' 
-			},
-			quote: 'in the future, man will pay to think...',
-			copy: '@copy; 7102-7105 | rege-IT solutions, professional LLC'
+			id: 'cnCiFooter',
+			contents: {
+				id: 'cnCiFooterContents',
+				items: [ {
+					email: 'soko.karneh@gmail.com',
+					phone: '818-237-8665'
+				}, {
+					quote: '<div style=\'font-style:italic;\'>in the future, man will pay to think... - miller</div>',
+					copy: '<div style=\'padding-top:5px;\'>&trade; &copy; 7102-7105 | Rege-IT Solutions, Professional LLC</div>'						
+				}]
+			}
 		}
 	},
 	init: function() {

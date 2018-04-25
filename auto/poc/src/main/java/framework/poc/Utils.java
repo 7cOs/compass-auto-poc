@@ -464,6 +464,7 @@ public class Utils {
 	        server.createContext("/executeTests", new ExecuteTest());
 	        server.setExecutor(null);
 	        server.start();	
+	        System.out.println( "Web server started on " + server.getAddress() );
 		}
 
 	    public static class AppLoader implements HttpHandler {

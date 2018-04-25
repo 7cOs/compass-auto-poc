@@ -4,78 +4,64 @@
 
 <script type="text/javascript">
 
-	var d=null, q=null, qs=null, b=null, 
+	var d=null, q=null, qs=null, ci=null, 
 	a=null; hd=null, cn=null, tbl=null, 
 	xhttp=null;
 
 	window.onload = function() {
 		
-		b=d.body;
-		b.id=data.ci.id;
-
-		// - Let ci be client-interface - //
-		cn=b.appendChild(d.createElement('div'));
-		cn.id=data.ci.cnId;
+		// - Intialise process - //
+		init();
 		
-		// - Add ci header - //
-		hd=cn.appendChild(d.createElement('div'));
-		for( var i in o=data.ci.header) {
-			i=='id' ? hd.id=o[i] : null;
-			if( i=='contents' ) { 
-				cn=hd.appendChild(d.createElement('div'));
-				cn.id = o[i].id;
-				for(var i in c=o[i]) {
-					if( i!='id' ) { 
-						var _cn = cn.appendChild(d.createElement('div'));
-						_cn.id=i; _cn.textContent=c[i];
-					}
-				}
-			} 
-		}
-
-		// - Add ci actions - //
-		cn=q('#cnCi').appendChild(d.createElement('div'));
-		tbl = cn.appendChild(d.createElement('div'));
-		tbl.id = data.ci.actions.cntId;
-		for(var i in o=data.ci.actions) {
-			i=='id' ? cn.id=o[i] :
-			i=='items' ? o[i].forEach(function(o){
-				a=tbl.appendChild(d.createElement('a'));
-				a.id=o.id; a.className=o.cls;
-				a.textContent=o.text;
-				setEvents(a);
-			}) : null		
-		}
-		// - Execute default action(s) - - //
-		// q('#lnkExtractTestCases').click();
+		// - Add main container - //
+		cn = ci.add('cn'); 
+		cn.id = data.ci.cnId;
 		
-		// - Add ci main - //
-		var mn=data.ci.main, c=mn.contents, os=c.items;
-		cn=q('#cnCi').appendChild(d.createElement('div'));
-		cn.id = mn.id;
-		os.forEach( function( o ) {
-			var _cn = cn.appendChild(d.createElement('div'));
-			_cn.id = o.id;
-			if( o.id == 'cnContents' ) {
-				for( var i in o ) {
-					if( i=='id' ) { continue; }
-					_cn.appendChild(d.createElement('div'));
-					_cn.lastChild.id = i;
-					if( i=='nav' ){
-						o[i].items.forEach(function(o){
-							_cn.lastChild.appendChild( d.createElement('div') );
-							_cn.lastChild.lastChild.id = o.id;
-							if( o.htm ) {
-								_cn.lastChild.lastChild.innerHTML = o.htm;
+		// - Add client-interface (ci) components - //
+		for( var i in o=data.ci ) {
+			if( typeof o[i] == 'object' ) {
+				var cmp = cn.add(i);
+				cmp.id = o[i].id;
+				switch( i ) {
+				case 'actions':
+					o[i].items.forEach(function(o) {
+						var b = cmp.add('btn');
+						b.id = o.id; b.className = o.cls;
+						b.textContent = o.text;
+						b.self = o;
+						setEvents(b);
+					});
+					break;					
+				case 'main':
+					console.log( 'outside main...' );
+					break;
+				case 'header':
+				case 'footer':
+					for( var i in oo=o[i] ) {
+						if(i=='contents') {
+							cmp.add(i).id = oo[i].id;
+							var cmp = cmp.lastChild;
+							if(cmp.id == 'cnCiHeaderContents') {
+								for( var i in ooo=oo[i] ) {
+									if( i!= 'id' ) {
+										cmp.add(i).textContent = ooo[i];
+									}
+								}
+							} else if(cmp.id == 'cnCiFooterContents') {
+								// - Adjust later - //
+								cmp.innerHTML = 
+									oo[i].items[1].quote +
+									oo[i].items[1].copy;
 							}
-						});
+						}
 					}
+					break;
 				}
 			}
-		});
-		
+		}
+
 		// - Style ci - //
-		setCiStyle();		
+		setCiStyle();
 	};
 
 	function init() {
@@ -86,8 +72,17 @@
 		q=function( q ) { return d.querySelector( q ); };
 		qs=function( q ) { return d.querySelectorAll( q ); };
 		
+		// - Let ci be client-interface - //
+		ci = d.body;
+		ci.id = data.ci.id;
+		
 		Element.prototype.add = function( n ) {
-			return this.appendChild(d.createElement(n));
+			var cmp = d.createElement(n);
+			cmp.className = 'cmp';
+			with( cmp.style ) {
+				display = 'block';
+			}
+			return this.appendChild(cmp);
 		};
 		
 		Element.prototype.q = function( q ) {
@@ -97,9 +92,18 @@
 		Element.prototype.qs = function( q ) {
 			return this.querySelectorAll( q );
 		};
+		
+		Element.prototype.clear = function() {
+			this.textContent = '';
+		};
+		
+		Element.prototype.show = function( ) {
+			this.style.display = '';
+		};
+		
+		Element.prototype.hide = function( ) {
+			this.style.display = 'none';
+		};		
 	}
-	
-	// - Initialise process - //
-	init();
-	
+
 </script>
