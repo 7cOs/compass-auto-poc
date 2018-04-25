@@ -17,7 +17,7 @@ function setEvents( o ) {
 	    	xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 			    if (this.readyState == 4 && this.status == 200) {
-			    	q('#cnContents').textContent = xhttp.responseText;
+			    	q('#navcontents').textContent = xhttp.responseText;
 			    }
 			};
 			xhttp.open("GET", "/extractTestMethods", true);

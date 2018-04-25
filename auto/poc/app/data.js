@@ -27,11 +27,16 @@ var data = {
 				cls: 'action',
 				ico: null,
 				text: 'Select Test Case...'
+			}, , {
+				id: 'lnkTestCaseConfig',
+				cls: 'action',
+				ico: null,
+				text: 'Configure Test Case'
 			}, {
 				id: 'lnkExecTest',
 				cls: 'action',
 				ico: null,
-				text: 'Execute Test...'
+				text: 'Execute Test(s)...'
 			}],
 			color: {
 				def: 'rgb(154,205,50)',
@@ -43,7 +48,24 @@ var data = {
 			contents: {
 				id: 'cnMainContents',
 				items: [{
-					id: 'cnContents'
+					id: 'cnContents',
+					contents: { 
+						id: 'contents' 
+					}, 
+					nav: { 
+						id: 'nav',
+						items: [{
+							id: 'navheader',
+							htm: 'Projects',
+							items: [{
+								name: 'Compass-Portal (Poc)',
+							}, {
+								name: 'Compass-Portal'
+							}]
+						}, {
+							id: 'navcontents'
+						}]
+					}
 				}, {
 					id: 'cnProgress'
 				}]
@@ -54,12 +76,20 @@ var data = {
 				email: 'soko.karneh@gmail.com',
 				phone: '818-237-8665' 
 			},
-			quote: 'in the future, man must pay to think...',
+			quote: 'in the future, man will pay to think...',
 			copy: '@copy; 7102-7105 | rege-IT solutions, professional LLC'
 		}
 	},
 	init: function() {
 		Array.prototype.get = function(){ return this; }
+		for(var i in this.ci) {
+			this.get = data.get;
+		}
+	},
+	get: function( n ) {
+		for( var i in this ) {
+			// console.log( i );
+		}
 	}
 };
 

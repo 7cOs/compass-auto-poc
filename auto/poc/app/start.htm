@@ -4,14 +4,10 @@
 
 <script type="text/javascript">
 
-	var d=document, q=null, qs=null, b=null, 
-	a=null; hd=null, cn=null, tbl=null, xhttp=null;
-	
-	q=function( q ) { return d.querySelector( q ); };
-	qs=function( q ) { return d.querySelectorAll( q ); };
-	
-	d.title=data.ci.title;
-	
+	var d=null, q=null, qs=null, b=null, 
+	a=null; hd=null, cn=null, tbl=null, 
+	xhttp=null;
+
 	window.onload = function() {
 		
 		b=d.body;
@@ -51,7 +47,7 @@
 			}) : null		
 		}
 		// - Execute default action(s) - - //
-		q('#lnkExtractTestCases').click();
+		// q('#lnkExtractTestCases').click();
 		
 		// - Add ci main - //
 		var mn=data.ci.main, c=mn.contents, os=c.items;
@@ -60,9 +56,50 @@
 		os.forEach( function( o ) {
 			var _cn = cn.appendChild(d.createElement('div'));
 			_cn.id = o.id;
+			if( o.id == 'cnContents' ) {
+				for( var i in o ) {
+					if( i=='id' ) { continue; }
+					_cn.appendChild(d.createElement('div'));
+					_cn.lastChild.id = i;
+					if( i=='nav' ){
+						o[i].items.forEach(function(o){
+							_cn.lastChild.appendChild( d.createElement('div') );
+							_cn.lastChild.lastChild.id = o.id;
+							if( o.htm ) {
+								_cn.lastChild.lastChild.innerHTML = o.htm;
+							}
+						});
+					}
+				}
+			}
 		});
 		
 		// - Style ci - //
-		setCiStyle();
+		setCiStyle();		
 	};
+
+	function init() {
+		
+		d=document;
+		d.title=data.ci.title;
+
+		q=function( q ) { return d.querySelector( q ); };
+		qs=function( q ) { return d.querySelectorAll( q ); };
+		
+		Element.prototype.add = function( n ) {
+			return this.appendChild(d.createElement(n));
+		};
+		
+		Element.prototype.q = function( q ) {
+			return this.querySelector( q );
+		};
+		
+		Element.prototype.qs = function( q ) {
+			return this.querySelectorAll( q );
+		};
+	}
+	
+	// - Initialise process - //
+	init();
+	
 </script>
