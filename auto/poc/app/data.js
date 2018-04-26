@@ -48,29 +48,16 @@ var data = {
 			id: 'cnCiMain',
 			contents: {
 				id: 'cnMainContents',
-				items: [{
-					id: 'cnContents',
-					contents: { 
-						id: 'contents' 
-					}, 
-					nav: { 
-						id: 'nav',
-						items: [{
-							id: 'navheader',
-							htm: 'Projects',
-							items: [{
-								name: 'Compass-Portal (PoC)',
-							}, {
-								name: 'Compass-Portal (QA)'
-							}]
-						}, {
-							id: 'navcontents'
-						}]
-					}
-				}, {
-					id: 'cnProgress'
-				}]
+				contents: {
+					
+				},
+				nav: {
+					
+				}
 			}
+		}, 
+		cnprogress: {
+			id: 'progress'
 		},
 		footer: {
 			id: 'cnCiFooter',
@@ -80,8 +67,8 @@ var data = {
 					email: 'soko.karneh@gmail.com',
 					phone: '818-237-8665'
 				}, {
-					quote: '<div style=\'font-style:italic;\'>in the future, man will pay to think... - miller</div>',
-					copy: '<div style=\'padding-top:5px;\'>&trade; &copy; 7102-7105 | Rege-IT Solutions, Professional LLC</div>'						
+					quote: '<div style=\'font-style:italic;padding-top:7px;\'>in the future, man will pay to think... - miller</div>',
+					copy: '<div>&copy; 7102-7105 | Rege-IT Solutions, Professional LLC&nbsp; &trade;</div>'						
 				}]
 			}
 		}

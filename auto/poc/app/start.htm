@@ -2,6 +2,9 @@
 <script type="text/javascript" src="style.js"></script>
 <script type="text/javascript" src="events.js"></script>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <script type="text/javascript">
 
 	var d=null, q=null, qs=null, ci=null, 
@@ -33,7 +36,17 @@
 					});
 					break;					
 				case 'main':
-					console.log( 'outside main...' );
+					for( var i in oo=o[i] ) {
+						if( i != 'id' ) {
+							cmp.add(i).id = oo[i].id;
+							var cmp = cmp.lastChild;
+							/*oo[i].items.forEach(function(o) {
+								for( var i in o ) {
+									cmp.add( i );
+								}
+							});*/
+						}
+					}
 					break;
 				case 'header':
 				case 'footer':
@@ -50,8 +63,8 @@
 							} else if(cmp.id == 'cnCiFooterContents') {
 								// - Adjust later - //
 								cmp.innerHTML = 
-									oo[i].items[1].quote +
-									oo[i].items[1].copy;
+									oo[i].items[1].copy +
+									oo[i].items[1].quote;
 							}
 						}
 					}

@@ -3,8 +3,12 @@ function setEvents( o ) {
 	o.addEventListener("click", function(e) {
 	    switch( this.id ) {
 	    case 'lnkExecTest':
+	    	with( q('#progress') .style ) {
+	    		display = '';
+	    	}
+	    	q('#progress').textContent = 'Progress...';
+			// q('#cnProgress').textContent='Executing test(s)...';
 	    	/*
-			q('#cnProgress').textContent='Executing test(s)...';
 			xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 			    if (this.readyState == 4 && this.status == 200) {
@@ -58,7 +62,7 @@ function setEvents( o ) {
 					// color = data.ci.actions.color.hgh;
 					borderTopColor = color;
 					background = 'rgb(225,225,225)';
-				} else if( ! s ) {
+				} else if( !s ) {
 					color = data.ci.actions.color.def;
 					borderTopColor = 'transparent';
 					background = 'rgb(145,145,145)';

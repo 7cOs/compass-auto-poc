@@ -8,7 +8,8 @@ function setCiStyle() {
 function setStyle( o ) {
 	if( o.style ) {
 		var id=o.id, cls=o.className, 
-			tn=o.nodeName.toLowerCase(), dW='875px';
+			tn=o.nodeName.toLowerCase(), 
+			dW='875px';
 		with( o.style ) {
 			fontFamily = 'tahoma';
 			if ( id=='ci' ) {
@@ -23,7 +24,7 @@ function setStyle( o ) {
 			} else if(id=='cnCiHeader') {
 				background = 'rgb(145,145,145)';
 			} else if(id=='cnCiHeaderContents') {
-				paddingTop = '145px';
+				paddingTop = '75px';
 				width = dW;
 				background = 'rgb(125, 125, 125)';
 				margin = '0 auto';
@@ -73,11 +74,22 @@ function setStyle( o ) {
 				background = 'rgb(225,225,225)';
 				margin = '0 auto';
 				// border = 'solid';
+			} else if (tn=='cnprogress') {
+				border = 'solid';
+				height = '25px';
+				width = dW;
+				margin = '0 auto';
+				textAlign = 'center';
+				display = 'flex';
+				o.textContent = 'progress...';
+				alignItems = 'center';
+				justifyContent = 'center';
+				display = 'none';
 			} else if(id=='cnCiFooter') {
 				background = 'rgb(145,145,145)';
 			} else if(id=='cnCiFooterContents') {
 				//border = 'solid';
-				height = '155px';
+				height = '75px';
 				background = 'rgb(125, 125, 125)';
 				color = 'rgb(255,255,255)';
 				width = dW;
