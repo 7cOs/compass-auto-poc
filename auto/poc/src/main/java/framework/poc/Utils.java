@@ -507,6 +507,7 @@ public class Utils {
             @Override
             public void handle(HttpExchange t) throws IOException {
               try {
+                System.out.println( "Starting test execution..." );
                 String[] cmd = {"cmd.exe", "/c", "mvn test -P testng"};
                 ProcessBuilder p = new ProcessBuilder(cmd);
                 p.start().waitFor();
@@ -515,6 +516,7 @@ public class Utils {
                 try(OutputStream os = t.getResponseBody()) {
                   os.write(response.getBytes());
                 }
+                System.out.println( response );
               }catch(Exception x ) {
                 x.printStackTrace();
               }

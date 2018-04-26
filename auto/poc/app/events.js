@@ -3,21 +3,16 @@ function setEvents( o ) {
 	o.addEventListener("click", function(e) {
 	    switch( this.id ) {
 	    case 'lnkExecTest':
-	    	with( q('#progress') .style ) {
-	    		display = '';
-	    	}
-	    	q('#progress').textContent = 'Progress...';
-			// q('#cnProgress').textContent='Executing test(s)...';
-	    	/*
+	    	q('#progress desc').textContent = 'Executing test(s)...';
+	    	q('#progress').show();
 			xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 			    if (this.readyState == 4 && this.status == 200) {
-			    	q('#cnProgress').textContent = xhttp.responseText;
+			    	q('#progress').hide();
 			    }
 			};
 			xhttp.open("GET", "/executeTests", true);
-			xhttp.send();
-			*/		    	
+			xhttp.send();	    	
 	    	break;
 	    case'lnkExtractTestCases':
 	    	xhttp = new XMLHttpRequest();

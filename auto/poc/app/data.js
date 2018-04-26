@@ -48,16 +48,21 @@ var data = {
 			id: 'cnCiMain',
 			contents: {
 				id: 'cnMainContents',
-				contents: {
-					
-				},
-				nav: {
-					
-				}
+				items:[{
+					id: 'cnContents'
+				},{
+					id: 'cnNav'
+				}]
 			}
 		}, 
-		cnprogress: {
-			id: 'progress'
+		fortschreiten: {
+			id: 'progress',
+			ico: {
+				id: 'icoProgress',
+				cls: 'fa fa-spinner fa-spin',
+				desc: 'Processing...',
+				style: "font-size:27px; color:rgb(154,205,50)"
+			}
 		},
 		footer: {
 			id: 'cnCiFooter',
@@ -67,7 +72,8 @@ var data = {
 					email: 'soko.karneh@gmail.com',
 					phone: '818-237-8665'
 				}, {
-					quote: '<div style=\'font-style:italic;padding-top:7px;\'>in the future, man will pay to think... - miller</div>',
+					// quote: '<div style=\'font-style:italic;padding-top:7px;\'>in the future, man will pay to think... - miller</div>',
+					quote: '<div style=\'font-style:italic;padding-top:7px;\'>there exist more than one foot-bridge to the future... - nietzsche</div>',
 					copy: '<div>&copy; 7102-7105 | Rege-IT Solutions, Professional LLC&nbsp; &trade;</div>'						
 				}]
 			}

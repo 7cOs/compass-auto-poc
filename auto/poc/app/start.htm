@@ -3,7 +3,9 @@
 <script type="text/javascript" src="events.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" 
+	href="https://cdnjs.cloudflare.com/ajax/libs/
+	font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type="text/javascript">
 
@@ -40,11 +42,23 @@
 						if( i != 'id' ) {
 							cmp.add(i).id = oo[i].id;
 							var cmp = cmp.lastChild;
-							/*oo[i].items.forEach(function(o) {
-								for( var i in o ) {
-									cmp.add( i );
-								}
-							});*/
+							for( var i in oo ) {
+								if( i=='contents' )
+									console.log( i );
+							}
+						}
+					}
+					break;
+				case 'fortschreiten':
+					for( var i in oo=o[i] ) {
+						if( i=='ico') {
+							var cnIco = cmp.add('cn');
+							var ico = cnIco.add(i);
+							ico.self = oo[i]; 
+							ico.id = oo[i].id;
+							ico.className = oo[i].cls;
+							var desc = cnIco.add('desc');
+							desc.textContent = oo[i].desc;
 						}
 					}
 					break;
@@ -89,12 +103,16 @@
 		ci = d.body;
 		ci.id = data.ci.id;
 		
-		Element.prototype.add = function( n ) {
+		Element.prototype.add = function(n) {
 			var cmp = d.createElement(n);
 			cmp.className = 'cmp';
 			with( cmp.style ) {
-				display = 'block';
+				if ( n != 'ico' ) {
+					display = 'block';
+				}
 			}
+			// - Store progenitor in child - //
+			cmp.progen = this;
 			return this.appendChild(cmp);
 		};
 		
