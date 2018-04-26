@@ -49,9 +49,25 @@ var data = {
 			contents: {
 				id: 'cnMainContents',
 				items:[{
-					id: 'cnContents'
-				},{
-					id: 'cnNav'
+					name: 'pane',
+					header: {
+						id: 'cnContentsHeader',
+						desc: '[Placeholder: Header]'
+					},
+					contents: {
+						id: 'cnContents',
+						info: '[Placeholder: Contents]'
+					}
+				}, {
+					name: 'pane',
+					header: { 
+						id: 'cnContentsHeader',
+						desc: 'Projects'
+					},
+					contents: {
+						id: 'cnContents',
+						info: '[Placeholder: Contents]'
+					}
 				}]
 			}
 		}, 

@@ -43,8 +43,16 @@
 							cmp.add(i).id = oo[i].id;
 							var cmp = cmp.lastChild;
 							for( var i in oo ) {
-								if( i=='contents' )
-									console.log( i );
+								if(i=='contents') {
+									oo[i].items.forEach(function(o) {
+										for(var i in o) {
+											if( i=='name' ) {
+												var pn = cmp.add(o[i]);
+												console.log( )
+											}
+										}
+									});
+								}
 							}
 						}
 					}
