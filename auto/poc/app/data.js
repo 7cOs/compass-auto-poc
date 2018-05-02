@@ -28,15 +28,20 @@ var data = {
 				ico: null,
 				text: 'Select Test Case...',
 				display: false
-			}, , {
+			}, {
+				id: 'lnkAddProj',
+				cls: 'action',
+				ico: 'fa fa-cubes',
+				text: 'Add Project...'
+			}, {
 				id: 'lnkTestCaseConfig',
 				cls: 'action',
-				ico: null,
+				ico: 'fa fa-wrench',
 				text: 'Configure...'
 			}, {
 				id: 'lnkExecTest',
 				cls: 'action',
-				ico: null,
+				ico: 'fa fa-cogs',
 				text: 'Execute Test(s)...'
 			}],
 			color: {
@@ -49,7 +54,8 @@ var data = {
 			contents: {
 				id: 'cnMainContents',
 				items:[{
-					name: 'pane',
+					name: 'pane',	
+					id: 'contents',
 					header: {
 						id: 'cnContentsHeader',
 						desc: '[Placeholder: Header]'
@@ -60,13 +66,34 @@ var data = {
 					}
 				}, {
 					name: 'pane',
+					id: 'nav',
 					header: { 
 						id: 'cnContentsHeader',
 						desc: 'Projects'
 					},
 					contents: {
 						id: 'cnContents',
-						info: '[Placeholder: Contents]'
+						info: {
+							projects: [{
+								name: 'compass-portal-poc',
+								srcpath: './testng.xml',
+								ico: {
+									unchecked: 'fa fa-square',
+									checked: 'fa fa-check-square'
+								}
+							}, {
+								name: 'compass-portal',
+								srcpath: './testng.xml',
+								ico: {
+									unchecked: 'fa fa-square',
+									checked: 'fa fa-check-square'
+								}
+							}, {
+								name: 'Add Project...',
+								id: 'optddProj',
+								ico: "fa fa-cubes"
+							}]
+						}
 					}
 				}]
 			}

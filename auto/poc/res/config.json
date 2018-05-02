@@ -1,6 +1,6 @@
 
 {
-	"title": "AUT Config. - Compass",
+	"title": "Compass-Portal-PoC - AUT Configuration",
 	"envs": {
 		"dev": {
 			"url": "https://compass-qa.cbrands.com/",

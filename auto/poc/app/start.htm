@@ -3,21 +3,88 @@
 <script type="text/javascript" src="events.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" 
+<link 
+	rel="stylesheet" 
 	href="https://cdnjs.cloudflare.com/ajax/libs/
-	font-awesome/4.7.0/css/font-awesome.min.css">
+	font-awesome/4.7.0/css/font-awesome.min.css"
+>
 
 <script type="text/javascript">
 
 	var d=null, q=null, qs=null, ci=null, 
-	a=null; hd=null, cn=null, tbl=null, 
-	xhttp=null;
+	a=null; hd=null, cn=null, tbl=null, xhttp=null;
 
 	window.onload = function() {
-		
-		// - Intialise process - //
+		// - Build Client-interface -  //
 		init();
+	};
+
+	function init() {
+		d=document;
+		d.title=data.ci.title;
+
+		q=function( q ) { return d.querySelector( q ); };
+		qs=function( q ) { return d.querySelectorAll( q ); };
 		
+		// - Let ci be client-interface - //
+		ci = d.body;
+		ci.id = data.ci.id;
+		
+		Element.prototype.add = function(n) {
+			if(typeof(n)== 'object') {
+				this.appendChild( n ); 
+				n.progen = this;
+				return;
+			}
+			var cmp = d.createElement(n);
+			cmp.className = 'cmp';
+			with( cmp.style ) {
+				if ( n != 'ico' ) {
+					display = 'block';
+				}
+			}
+			// - Store progenitor in child - //
+			cmp.progen = this;
+			return this.appendChild(cmp);
+		};
+		
+		Element.prototype.q = function( q ) {
+			return this.querySelector( q );
+		};
+		
+		Element.prototype.qs = function( q ) {
+			return this.querySelectorAll( q );
+		};
+		
+		Element.prototype.clear = function() {
+			this.textContent = '';
+		};
+		
+		Element.prototype.show = function( ) {
+			this.style.display = '';
+		};
+		
+		Element.prototype.hide = function( ) {
+			this.style.display = 'none';
+		};	
+		
+		// - Do exploits here... - //
+		// - Add client-interface main component(s) - //
+		buildCiMain();	
+		
+		// - Add navigation contents - //
+		addNavContents();
+		
+		// - Style ci - //
+		setCiStyle();
+		
+		// - Execute default ooptions - //
+		// - Display projects - //
+		btnSelProj.click(); 
+	}
+	
+	
+	function buildCiMain() {
 		// - Add main container - //
 		cn = ci.add('cn'); 
 		cn.id = data.ci.cnId;
@@ -35,6 +102,11 @@
 						b.textContent = o.text;
 						b.self = o;
 						setEvents(b);
+						// - Insert button icon - //
+						var ico = b.insertBefore(b.add('ico'), b.firstChild);
+						if(o.ico) {
+							ico.className = o.ico;
+						}
 					});
 					break;					
 				case 'main':
@@ -46,9 +118,12 @@
 								if(i=='contents') {
 									oo[i].items.forEach(function(o) {
 										for(var i in o) {
+											var pn;
 											if( i=='name' ) {
-												var pn = cmp.add(o[i]);
-												console.log( )
+												pn = cmp.add(o[i]);
+												pn.id = o.id;
+												pn.add('header').id=o.header.id;
+												pn.add('contents').id=o.contents.id;
 											}
 										}
 									});
@@ -93,56 +168,52 @@
 					break;
 				}
 			}
-		}
-
-		// - Style ci - //
-		setCiStyle();
-	};
-
-	function init() {
-		
-		d=document;
-		d.title=data.ci.title;
-
-		q=function( q ) { return d.querySelector( q ); };
-		qs=function( q ) { return d.querySelectorAll( q ); };
-		
-		// - Let ci be client-interface - //
-		ci = d.body;
-		ci.id = data.ci.id;
-		
-		Element.prototype.add = function(n) {
-			var cmp = d.createElement(n);
-			cmp.className = 'cmp';
-			with( cmp.style ) {
-				if ( n != 'ico' ) {
-					display = 'block';
-				}
-			}
-			// - Store progenitor in child - //
-			cmp.progen = this;
-			return this.appendChild(cmp);
-		};
-		
-		Element.prototype.q = function( q ) {
-			return this.querySelector( q );
-		};
-		
-		Element.prototype.qs = function( q ) {
-			return this.querySelectorAll( q );
-		};
-		
-		Element.prototype.clear = function() {
-			this.textContent = '';
-		};
-		
-		Element.prototype.show = function( ) {
-			this.style.display = '';
-		};
-		
-		Element.prototype.hide = function( ) {
-			this.style.display = 'none';
-		};		
+		}		
 	}
-
+	
+	
+	function addNavContents() {
+		var b = qs('main contents pane')[1].add('button');
+		b.id = 'btnSelProj';
+		b.innerHTML = '<span>Select Project...'+
+			'&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+		b.colIcoCls = 'fa fa-angle-double-up';
+		b.expIcoCls = 'fa fa-angle-double-down';
+		b.add('ico').className = b.colIcoCls;
+		setEvents(b);
+		// - Insert button icon - //
+		// var ic = b.insertBefore( b.add('ico'), b.firstChild );
+		// ic.className = 'fa fa-object-group';
+		with(q('main contents').style) {
+			display = 'flex';
+			[].forEach.call( qs('pane'), function(o,i) {
+				with( o.style ) {
+					if( i==0 ) {
+						flex = 1;
+						//borderRight = 'solid';
+					}else {
+						width = '25%';
+						with(o.q('button').style) {
+							width = '100%';
+							height = '55px';
+							fontWeight = 'bold';
+							o.q('span').style.fontSize = '13.5px';
+							border = 'none';
+							cursor = 'pointer';
+							background = 'rgb(145, 145, 145)';
+							color = 'rgb(255,255,255)';
+							borderTop = 'solid 1px rgb(225,225,225)';
+							with(o.q('ico').style) {
+								fontSize = '19px';
+								paddingTop = '5px';
+								position = 'relative';
+								top = '3px';
+							}
+						}
+					}
+				}
+			});
+		}
+		ci.q('#nav #cnContentsHeader').add( b );
+	}
 </script>

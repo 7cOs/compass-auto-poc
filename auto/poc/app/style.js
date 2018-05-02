@@ -55,16 +55,26 @@ function setStyle( o ) {
 				display = 'flex';
 				[].forEach.call(o.qs('.action'), function(o,i){
 					with(o.style) {
-						width = '125px';
+						display = 'flex';
+						flexDirection = 'column';
+						width = '139px';
 						fontSize = '13.5px';
-						color = data.ci.actions.color.def;
+						color = data.ci.actions.color.hgh;
 						padding = '15px';
 						cursor = 'pointer';
 						textAlign = 'center';
 						o.self.display == false ? o.hide() : null;
 						borderTop = 'solid 3px rgb(145,145,145)';
-						if( o != o.parentNode.lastChild ) {
-							borderRight = 'solid 1px rgb(205,205,205)';
+						//if( o != o.parentNode.lastChild ) {
+							// borderRight = 'solid 1px rgb(205,205,205)';
+						//}
+						fontWeight = 'normal';
+						// - Set action buttons style - //
+						if(o.self.ico) {
+							with( o.q('ico').style ) {
+								fontSize = '19px';
+								// paddingRight = '5px';
+							}
 						}
 					}
 				});
@@ -74,7 +84,11 @@ function setStyle( o ) {
 				background = 'rgb(225,225,225)';
 				margin = '0 auto';
 				// border = 'solid';
-			} else if (id=='progress') {
+				with(o.q('#contents #cnContentsHeader').style){
+					// border = 'solid';
+					height = '155px';
+				}
+			}  else if (id=='progress') {
 				width = dW;
 				margin = '0 auto';
 				display = 'flex';
