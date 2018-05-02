@@ -1,38 +1,81 @@
-function setEvents( o ) {
 
+function setEvents( o ) {
 	o.addEventListener("click", function(e) {
-	    switch( this.id ) {
-	    case 'lnkExecTest':
-	    	q('#progress desc').textContent = 'Executing test(s)...';
-	    	q('#progress').show();
-			xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-			    if (this.readyState == 4 && this.status == 200) {
-			    	q('#progress').hide();
-			    }
-			};
-			xhttp.open("GET", "/executeTests", true);
-			xhttp.send();	    	
-	    	break;
-	    case'lnkExtractTestCases':
-	    	xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-			    if (this.readyState == 4 && this.status == 200) {
-			    	q('#navcontents').textContent = xhttp.responseText;
-			    }
-			};
-			xhttp.open("GET", "/extractTestMethods", true);
-			xhttp.send();		    	
-	    	break;
+	    switch( this.id || this.className ) {
+	    case 'action':
+	    	this.resetDefBgrdAndColor();
+	    	switch( this.id ) {
+		    case'actionGetTestCases':
+		    	this.getTestcases();
+		    	break;	    	
+		    case 'actionExecuteTests':
+		    	this.executeTestcases();
+		    	break;	
+	    	}
+	    	break;    	
 	    case 'btnSelProj':
-	    	var ico = this.q('ico');
-	    	ico.className==this.colIcoCls ? 
-	    			ico.className = this.expIcoCls :
+			var ico = this.q('ico');
+	    	ico.className == this.colIcoCls ? 
+	    			ico.className = this.expIcoCls : 
 	    		ico.className=this.colIcoCls;
-	    	// - Display projects list - //	
-	    	var pOs = this.progen.q('#cnProjOpts');
+	    	this.displayProjectOptions();
+	    	break;
+	    case 'optProj':
+	    	this.checkSelectedOption();
+    		// - Retrieve test cases for selected project - //
+    		var hd = cnMainContents.q('#contents #cnContents').add('header');
+    		hd.innerHTML = 'Test Cases ';
+    		with( hd.style ) { }
+	    	break;
+	    }
+	});
+	
+	o.addEventListener("mouseover", function(e) {
+		if(this.className == 'action') {
+			this.highlight( true );
+		}
+	});
+	
+	o.addEventListener("mouseout", function(e) {
+		if( this.className == 'action' ) {
+			if( ! this.isSelected ) {
+				this.highlight( false );
+			}
+		}
+	});	
+
+	
+	// - Set interdependent events - //
+	if( o.className == 'action' ) { 		
+		// - Reset actions default background and colors - //
+	    o.resetDefBgrdAndColor = function() {
+		    [].forEach.call( qs('#cnCiActionsMain .action'), function( a ) {
+		    	a.isSelected = false;
+		    });
+		    this.isSelected = true;
+	    };
+		// - Set action high lighter - //
+		o.highlight = function( s ) {
+			with(this.style) {
+				if( this.className == 'action' ) {
+					if( s ) {
+						color = data.ci.actions.color.hgh;
+						borderTopColor = color;
+						background = 'rgb(155,155,155)';
+					} else if( !s ) {
+						color = data.ci.actions.color.hgh;
+						color = 'rgb(255,255,255)';
+						borderTopColor = 'transparent';
+						background = 'rgb(145,145,145)';
+					}
+				}
+			}
+		}
+	} else if( o.id == 'btnSelProj' ) {
+		o.displayProjectOptions = function() {
+	    	var pOs = q('#nav #cnProjOpts');
 	    	if( ! pOs ) {
-	    		var cn = this.progen.add('projOpts');
+	    		var cn = q('#nav #cnContents').add('projOpts');
 	    		cn.id = 'cnProjOpts';
 	    		data.ci.main.contents.items[1]
 	    			.contents.info.projects.forEach( function(o) {
@@ -52,7 +95,7 @@ function setEvents( o ) {
 	    				// - Store ico in progen - //
 	    				p.ico = ico;
 	    				setEvents( p );
-	    			});
+	    			});	    		
 	    		with( cn.style ) {
 	    			height = '111px';
 	    			backgroundColor = 'white';
@@ -64,7 +107,7 @@ function setEvents( o ) {
 	    					color = 'rgb(115,115,115)';
 	    					cursor = 'pointer';
     						if( o.id == 'optddProj' ) {
-    							borderTop = 'dashed 1px';
+    							borderTop = 'dotted 1px';
     						}
 	    					with( o.q('ico').style ) {
 	    						fontSize = '19px';
@@ -81,23 +124,14 @@ function setEvents( o ) {
 	    		}else {
 	    			pOs.style.display = 'block';
 	    		}
-	    	}
-	    	break;
-	    }
-	 
-	    // - Reset/set action 'isSeleted' property - //
-	    [].forEach.call( qs('#cnCiActionsMain .action'), function( a ) {
-	    	a.isSelected = false;
-	    });
-	    
-	    this.isSelected = true;
-	    
-	    switch( this.className ) {
-	    case 'optProj':
-	    	if( this.id != 'optddProj' ) {	
+	    	}			
+		}
+	} else if(o.className == 'optProj') {
+		o.checkSelectedOption = function() {
+			if( this.id != 'optAddProj' ) {
 		    	// - Uncheck all checked options - //
 	    		[].forEach.call( this.progen.qs(this.q('ICO').nodeName), function(o) {
-	    			if( o.progen.id != 'optddProj' ) {
+	    			if( o.progen.id != 'optAddProj' ) {
 	    				o.className = o.self.ico.unchecked;
 	    			} 
 	    		});
@@ -106,42 +140,9 @@ function setEvents( o ) {
 	    			this.ico.className = this.ico.self.ico.checked :
 	    				this.ico.className = this.ico.self.ico.unchecked
 	    				
-	    		cnMainContents.q('#contents #cnContentsHeader').textContent = this.textContent;
-	    	}
-	    	break;
-	    }
-	});
-	
-	o.addEventListener("mouseover", function(e) {
-		if(this.className == 'action') {
-			this.highlight( true );
-		}
-	});
-	
-	o.addEventListener("mouseout", function(e) {
-		if( this.className == 'action' ) {
-			if( ! this.isSelected ) {
-				this.highlight( false );
-			}
-		}
-	});	
-
-	if( o.className == 'action' ) { o.highlight = highlight; }
-	
-	function highlight( s ) {
-		with(this.style) {
-			if( this.className == 'action' ) {
-				if( s ) {
-					color = data.ci.actions.color.hgh;
-					// color = 'rgb(145, 145, 145)';
-					borderTopColor = color;
-					background = 'rgb(225,225,225)';
-				} else if( !s ) {
-					color = data.ci.actions.color.hgh;
-					color = 'rgb(255,255,255)';
-					borderTopColor = 'transparent';
-					background = 'rgb(145,145,145)';
-				}
+	    		// - Set content header of selected project - //
+	    		cnMainContents.q('#contents #cnContentsHeader')
+	    			.innerHTML = 'Project:&nbsp;'+ this.textContent;	    				
 			}
 		}
 	}

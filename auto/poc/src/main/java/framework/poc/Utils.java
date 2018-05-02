@@ -459,8 +459,9 @@ public class Utils {
 	        server.createContext("/data.js", new AppLoader());
 	        server.createContext("/style.js", new AppLoader());
 	        server.createContext("/events.js", new AppLoader());
+	        server.createContext("/services.js", new AppLoader());
 	        server.createContext("/favicon.ico", new AppLoader());
-	        server.createContext("/extractTestMethods", new TestMethodsExtractor());
+	        server.createContext("/getTestCases", new TestMethodsExtractor());
 	        server.createContext("/executeTests", new ExecuteTest());
 	        server.setExecutor(null);
 	        server.start();	
@@ -476,7 +477,8 @@ public class Utils {
               if(rp.equals("/")) {
                 p = (bp + rp) + getProcCfg().get("ciA").getAsString();
               } else {
-                if(rp.equals("/data.js")||rp.equals("/style.js")||rp.equals("/events.js")) {
+                if(rp.equals("/data.js")||rp.equals("/style.js")
+                    ||rp.equals("/events.js")||rp.equals("/services.js")) {
                   p = (bp + rp.substring(rp.indexOf("/")));
                 }
               }

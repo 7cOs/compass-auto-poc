@@ -1,18 +1,15 @@
 <script type="text/javascript" src="data.js"></script>
 <script type="text/javascript" src="style.js"></script>
 <script type="text/javascript" src="events.js"></script>
+<script type="text/javascript" src="services.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link 
-	rel="stylesheet" 
-	href="https://cdnjs.cloudflare.com/ajax/libs/
-	font-awesome/4.7.0/css/font-awesome.min.css"
->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type="text/javascript">
 
 	var d=null, q=null, qs=null, ci=null, 
-	a=null; hd=null, cn=null, tbl=null, xhttp=null;
+	a=null; hd=null, cn=null, tbl=null;
 
 	window.onload = function() {
 		// - Build Client-interface -  //
@@ -73,14 +70,13 @@
 		buildCiMain();	
 		
 		// - Add navigation contents - //
-		addNavContents();
+		addNavContentsHeader();
 		
 		// - Style ci - //
 		setCiStyle();
 		
-		// - Execute default ooptions - //
-		// - Display projects - //
-		btnSelProj.click(); 
+		// - Execute default startup options - //
+		execDefaultStartupOpts();
 	}
 	
 	
@@ -106,6 +102,15 @@
 						var ico = b.insertBefore(b.add('ico'), b.firstChild);
 						if(o.ico) {
 							ico.className = o.ico;
+						}
+						// - Set action service(s) - //
+						switch(b.id) {
+						case 'actionGetTestCases':
+							b.getTestcases = getTestcases;
+							break;
+						case 'actionExecuteTests':
+							b.executeTestcases = executeTestcases;
+							break;
 						}
 					});
 					break;					
@@ -172,7 +177,7 @@
 	}
 	
 	
-	function addNavContents() {
+	function addNavContentsHeader() {
 		var b = qs('main contents pane')[1].add('button');
 		b.id = 'btnSelProj';
 		b.innerHTML = '<span>Select Project...'+
@@ -214,6 +219,23 @@
 				}
 			});
 		}
+		// - Add button to progen container - //
 		ci.q('#nav #cnContentsHeader').add( b );
+	}
+
+
+	function execDefaultStartupOpts() {
+		// - Display projects navigation pane - //
+		btnSelProj.click();
+		
+		// - Select default project - //
+		var dPn = data.getDefProjName();
+		[].forEach.call(qs('#cnProjOpts projopt _name'), function(o) {
+			if( dPn && (o.textContent == dPn) ) {
+				o.progen.q('ico').click();
+				return;
+			}
+		});
+		
 	}
 </script>

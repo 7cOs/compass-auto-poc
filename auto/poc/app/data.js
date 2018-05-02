@@ -17,32 +17,28 @@ var data = {
 			id:'cnCiActionsMain',
 			cntId: 'cnCiActionsTbl',
 			items: [{
-				id: 'lnkExtractTestCases',
+				id: 'actionGetTestCases',
 				cls: 'action',
 				ico: null,
-				text: 'Extract Test Case...',
-				display: false
+				text: 'Get Test Cases...',
+				display: false,
+				reqPath: '/getTestCases'
 			}, {
-				id: 'lnkSelectTestCase',
-				cls: 'action',
-				ico: null,
-				text: 'Select Test Case...',
-				display: false
-			}, {
-				id: 'lnkAddProj',
+				id: 'actionAddProj',
 				cls: 'action',
 				ico: 'fa fa-cubes',
 				text: 'Add Project...'
 			}, {
-				id: 'lnkTestCaseConfig',
+				id: 'actionTestCaseConfig',
 				cls: 'action',
 				ico: 'fa fa-wrench',
 				text: 'Configure...'
 			}, {
-				id: 'lnkExecTest',
+				id: 'actionExecuteTests',
 				cls: 'action',
 				ico: 'fa fa-cogs',
-				text: 'Execute Test(s)...'
+				text: 'Execute Test(s)...',
+				reqPath: '/executeTests'
 			}],
 			color: {
 				def: 'rgb(154,205,50)',
@@ -75,22 +71,24 @@ var data = {
 						id: 'cnContents',
 						info: {
 							projects: [{
-								name: 'compass-portal-poc',
+								name: 'Compass-Portal - PoC',
 								srcpath: './testng.xml',
 								ico: {
 									unchecked: 'fa fa-square',
 									checked: 'fa fa-check-square'
-								}
+								},
+								def: true
 							}, {
-								name: 'compass-portal',
+								name: 'Compass-Portal - Beer',
 								srcpath: './testng.xml',
 								ico: {
 									unchecked: 'fa fa-square',
 									checked: 'fa fa-check-square'
-								}
+								},
+								def: false
 							}, {
 								name: 'Add Project...',
-								id: 'optddProj',
+								id: 'optAddProj',
 								ico: "fa fa-cubes"
 							}]
 						}
@@ -122,16 +120,41 @@ var data = {
 			}
 		}
 	},
+	
 	init: function() {
 		Array.prototype.get = function(){ return this; }
 		for(var i in this.ci) {
 			this.get = data.get;
 		}
 	},
+	
 	get: function( n ) {
 		for( var i in this ) {
 			// console.log( i );
 		}
+	},
+	
+	getActionById: function( id ) {
+		this.ci.actions.items.forEach( function(a) {
+			console.log( a.id );
+		});
+	},
+	
+	getDefProj: function() {
+		var dp = null;
+		this.ci.main.contents.items.forEach(function(itm) {
+			if(itm.id=='nav') {
+				itm.contents.info.projects.forEach(function(itm){
+					if(itm.def){ dp = itm; }
+				});
+			}
+		});
+		return dp;
+	},
+	
+	getDefProjName: function() {
+		var dP = this.getDefProj();
+		if( dP ) { return dP.name; }
 	}
 };
 

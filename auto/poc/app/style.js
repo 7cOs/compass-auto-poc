@@ -85,8 +85,22 @@ function setStyle( o ) {
 				margin = '0 auto';
 				// border = 'solid';
 				with(o.q('#contents #cnContentsHeader').style){
-					// border = 'solid';
-					height = '155px';
+					background = 'rgb(145, 145, 145)'; 
+					color = 'rgb(255, 255, 255)';
+					height = '55px';
+					margin = '0 auto';
+					display = 'flex';
+					alignItems = 'center';
+					paddingLeft = '15px';
+					borderTop = 'solid 1px rgb(225,225,225)';
+					borderRight = borderTop;
+					fontSize = '15px';
+					fontWeight = 'bold';
+				}
+				with(o.q('#contents #cnContents').style) {
+					// console.log( o.progen.clientHeight - o.q('#contents #cnContentsHeader').clientHeight );
+					height = '25%';
+					backgroundColor = 'rgb(255,255,255)';
 				}
 			}  else if (id=='progress') {
 				width = dW;
